@@ -7,6 +7,10 @@ import { ProgressThin } from '@/components/ui/progress-thin'
 import { useAppStore } from '@/stores/app'
 import { formatBytesWithConfig } from '@/utils/helper'
 
+const props = defineProps<{
+  nodeUuid: string
+}>()
+
 interface XuiTrafficUser {
   name: string
   enabled: boolean
@@ -141,6 +145,12 @@ function formatTraffic(value: number): string {
   return formatBytesWithConfig(value, appStore.byteDecimals)
 }
 
+function buildApiUrl(apiUrl: string): string {
+  const url = new URL(apiUrl, window.location.origin)
+  url.searchParams.set('node', props.nodeUuid)
+  return url.toString()
+}
+
 function clearPolling(): void {
   if (refreshTimer !== undefined) {
     clearInterval(refreshTimer)
@@ -162,7 +172,7 @@ async function fetchTrafficUsers(): Promise<void> {
   errorMessage.value = ''
 
   try {
-    const response = await fetch(apiUrl, {
+    const response = await fetch(buildApiUrl(apiUrl), {
       credentials: 'omit',
       headers: { Accept: 'application/json' },
       signal: requestController.signal,
@@ -213,7 +223,7 @@ function restartPolling(): void {
 }
 
 watch(
-  () => [appStore.xuiTrafficApiUrl, appStore.xuiTrafficRefreshInterval] as const,
+  () => [appStore.xuiTrafficApiUrl, appStore.xuiTrafficRefreshInterval, props.nodeUuid] as const,
   restartPolling,
   { immediate: true },
 )

@@ -43,3 +43,6 @@ __screenshots__/
 # Theme build output
 komari-theme-*.zip
 bun.lock
+
+# Local 3x-ui relay secrets
+relay/xui-sources.json

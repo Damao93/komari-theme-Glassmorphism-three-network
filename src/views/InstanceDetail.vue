@@ -694,6 +694,7 @@ const trafficProgressClass = computed(() => {
 
       <XuiTrafficCard
         v-if="shouldShowXuiTraffic && (!appStore.nodeDetailSectionTabsEnabled || activeDetailSection === 'overview')"
+        :node-uuid="data.uuid"
         class="px-4"
       />
 

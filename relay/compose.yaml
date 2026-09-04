@@ -1,0 +1,18 @@
+services:
+  xui-traffic-relay:
+    build: .
+    container_name: xui-traffic-relay
+    restart: unless-stopped
+    environment:
+      ALLOWED_ORIGIN: https://komari.example.com
+      CACHE_TTL_SECONDS: 30
+      UPSTREAM_TIMEOUT_SECONDS: 10
+      XUI_SOURCES_FILE: /run/secrets/xui-sources.json
+    ports:
+      - 127.0.0.1:3010:3000
+    secrets:
+      - xui_sources
+
+secrets:
+  xui_sources:
+    file: ./xui-sources.json

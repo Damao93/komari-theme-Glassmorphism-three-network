@@ -263,7 +263,7 @@
         "name": "脱敏中转 API URL",
         "type": "string",
         "default": "",
-        "help": "仅填写返回用户流量数据的脱敏中转 API 地址。请勿填写 3x-ui 面板地址或 Bearer Token，前端不会接收、保存或转发 Token。"
+        "help": "填写统一脱敏中转 API 地址，例如 /api/xui-traffic。主题会自动附加当前 Komari 节点 UUID 的 node 查询参数，由中转服务选择对应 3x-ui。请勿填写 3x-ui 面板地址或 Bearer Token。"
       },
       {
         "key": "xuiTrafficNodeMatcher",
