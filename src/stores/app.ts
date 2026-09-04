@@ -563,6 +563,22 @@ const useAppStore = defineStore('app', () => {
 
   const homeExpiringDays = computed<number>(() => readNumberSetting(themeSettings.value, 'homeExpiringDays', 30, 1, 3650))
 
+  const xuiTrafficEnabled = computed<boolean>(() => readBooleanSetting(themeSettings.value, 'xuiTrafficEnabled', true))
+
+  const xuiTrafficApiUrl = computed<string>(() => {
+    const value = themeSettings.value.xuiTrafficApiUrl
+    return typeof value === 'string' ? value.trim() : ''
+  })
+
+  const xuiTrafficNodeMatcher = computed<string>(() => {
+    const value = themeSettings.value.xuiTrafficNodeMatcher
+    return typeof value === 'string' ? value.trim() : 'DMIT'
+  })
+
+  const xuiTrafficRefreshInterval = computed<number>(() => readNumberSetting(themeSettings.value, 'xuiTrafficRefreshInterval', 30, 5, 3600))
+
+  const xuiTrafficDemoEnabled = computed<boolean>(() => readBooleanSetting(themeSettings.value, 'xuiTrafficDemoEnabled', true))
+
   const hideAdminEntryWhenLoggedOut = computed<boolean>(() => readBooleanSetting(themeSettings.value, 'hideAdminEntryWhenLoggedOut', false))
 
   const hidePriceWhenLoggedOut = computed<boolean>(() => readBooleanSetting(themeSettings.value, 'hidePriceWhenLoggedOut', false))
@@ -712,6 +728,11 @@ const useAppStore = defineStore('app', () => {
     homeHighLoadThreshold,
     homeTrafficWarningThreshold,
     homeExpiringDays,
+    xuiTrafficEnabled,
+    xuiTrafficApiUrl,
+    xuiTrafficNodeMatcher,
+    xuiTrafficRefreshInterval,
+    xuiTrafficDemoEnabled,
     hideAdminEntryWhenLoggedOut,
     hidePriceWhenLoggedOut,
     providerAliases,
