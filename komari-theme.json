@@ -248,6 +248,45 @@
         "help": "节点剩余天数小于等于该值时归为即将到期（1-3650）"
       },
       {
+        "name": "3x-ui 用户流量",
+        "type": "title"
+      },
+      {
+        "key": "xuiTrafficEnabled",
+        "name": "启用 3x-ui 用户流量",
+        "type": "switch",
+        "default": true,
+        "help": "在命中指定节点的详情页概览中显示 3x-ui 用户流量排行"
+      },
+      {
+        "key": "xuiTrafficApiUrl",
+        "name": "脱敏中转 API URL",
+        "type": "string",
+        "default": "",
+        "help": "填写统一脱敏中转 API 地址，例如 /api/xui-traffic。主题会自动附加当前 Komari 节点 UUID 的 node 查询参数，由中转服务选择对应 3x-ui。请勿填写 3x-ui 面板地址或 Bearer Token。"
+      },
+      {
+        "key": "xuiTrafficNodeMatcher",
+        "name": "节点名称匹配词",
+        "type": "string",
+        "default": "DMIT",
+        "help": "节点 name、remark 或 public_remark 包含该文本时显示模块，不区分大小写"
+      },
+      {
+        "key": "xuiTrafficRefreshInterval",
+        "name": "流量刷新间隔",
+        "type": "number",
+        "default": 30,
+        "help": "真实 API 数据刷新间隔，单位：秒（5-3600）"
+      },
+      {
+        "key": "xuiTrafficDemoEnabled",
+        "name": "启用演示数据",
+        "type": "switch",
+        "default": true,
+        "help": "API URL 为空时显示内置演示数据，并在模块中明确标记为演示数据"
+      },
+      {
         "name": "自定义背景",
         "type": "title"
       },

@@ -28,6 +28,7 @@ import { formatPrice, formatPriceWithCycle, getExpireStatus, getExpireText, pars
 
 const LoadChart = defineAsyncComponent(() => import('@/components/LoadChart.vue'))
 const PingChart = defineAsyncComponent(() => import('@/components/PingChart.vue'))
+const XuiTrafficCard = defineAsyncComponent(() => import('@/components/XuiTrafficCard.vue'))
 
 const route = useRoute()
 const router = useRouter()
@@ -46,6 +47,16 @@ const peakNetOut = ref(0)
 const peakNetIn = ref(0)
 const activeDetailSection = ref<'overview' | 'load' | 'ping'>('overview')
 const data = computed(() => nodesStore.visibleNodesByUuid.get(String(route.params.id)))
+
+const shouldShowXuiTraffic = computed(() => {
+  const node = data.value
+  const matcher = appStore.xuiTrafficNodeMatcher.toLocaleLowerCase()
+  if (!node || !appStore.xuiTrafficEnabled || !matcher)
+    return false
+
+  return [node.name, node.remark, node.public_remark]
+    .some(value => typeof value === 'string' && value.toLocaleLowerCase().includes(matcher))
+})
 
 // CPU 评分
 interface CpuScore {
@@ -680,6 +691,12 @@ const trafficProgressClass = computed(() => {
           </div>
         </CardX>
       </div>
+
+      <XuiTrafficCard
+        v-if="shouldShowXuiTraffic && (!appStore.nodeDetailSectionTabsEnabled || activeDetailSection === 'overview')"
+        :node-uuid="data.uuid"
+        class="px-4"
+      />
 
       <LoadChart v-if="!appStore.nodeDetailSectionTabsEnabled || activeDetailSection === 'load'" :uuid="data.uuid" class="px-4" />
       <PingChart v-if="!appStore.nodeDetailSectionTabsEnabled || activeDetailSection === 'ping'" :uuid="data.uuid" class="px-4" />
